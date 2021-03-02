@@ -29,7 +29,7 @@ function postSearch(req, res) {
     superagent.get(url).then(bookDataReturned => {
         const bookArray = bookDataReturned.body.items.map((item) => new Books(item));
         res.render(`pages/searches/show.ejs`, { bookArray: bookArray });
-        res.redirect('/students');
+        //res.redirect('/students');
     });
 }
 
@@ -44,9 +44,12 @@ app.listen(port, () => {
 
 //bookData.volumenInfo {title, author}
 function Books(bookData) {
-    console.log(bookData);
-    this.title = bookData.volumeInfo.title || "Dune";//jsonData.title;
-    this.author = bookData.volumeInfo.authors || "Author";
-    this.overview = bookData.volumeInfo.description || "A book about a space drugs, giant space worms, an a boy that basically becomes god"; //jsonData.overview;
-    this.image_url = bookData.volumeInfo.image || `https://i.imgur.com/J5LVHEL.jpg`; //`https://www.themoviedb.org/t/p/w600_and_h900_bestv2${jsonData.poster_path}` || 'sorry no image';
+    const placeHolder = `https://i.imgur.com/J5LVHEL.jpg`;
+    const bookImg = (bookData.volumeInfo.imageLinks !== undefined) ? bookData.volumeInfo.imageLinks.thumbnail : placeHolder;
+    //console.log(bookData.volumeInfo.imageLinks.smallThumbnail);
+    this.title = bookData.volumeInfo.title;
+    this.author = bookData.volumeInfo.authors;
+    this.overview = bookData.volumeInfo.description;
+    this.image = bookImg;
+    // this.image = bookData.volumeInfo.imageLinks.thumbnail || `https://i.imgur.com/J5LVHEL.jpg`; //`https://www.themoviedb.org/t/p/w600_and_h900_bestv2${jsonData.poster_path}` || 'sorry no image';
 }
