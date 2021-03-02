@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', renderHomePage);
 app.get('/searches/new', getNew);
-app.get('/searches', postSearch);
+app.post('/searches', postSearch);
 const booksArr = [];
 //const url = 'https://www.googleapis.com/books/v1/volumes?q=Dune';
 
@@ -22,13 +22,16 @@ function renderHomePage(req, res) {
 }
 //Map over the array of results, creating a new Book instance from each result object.
 function postSearch(req, res) {
-    console.log(req.body);
-    const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:Dune`;
+    console.log(req.body.search);
+    console.log(req.body.search_radio);
+    const url = `https://www.googleapis.com/books/v1/volumes?q=in${req.body.search_radio}:${req.body.search}`;
     superagent.get(url).then(bookDataReturned => {
-        const output = bookDataReturned.body.items.map((item) => new Books(item), 0);
+        const bookArray = bookDataReturned.body.items.map((item) => new Books(item));
         // const sliced = output.slice(10);
-        console.log(output);
-        res.json(output);
+        // console.log(bookArray);
+        //res.json(bookArray);
+        res.render(`pages/searches/show.ejs`, { bookArray: bookArray });
+        res.redirect('/students');
     });
 }
 
@@ -45,7 +48,7 @@ app.listen(port, () => {
 //bookData.volumenInfo {title, author}
 function Books(bookData) {
     this.title = bookData.volumeInfo.title || "Dune";//jsonData.title;
-    this.author = bookData.volumeInfo.authors[0] || "Author";
+    this.author = bookData.volumeInfo.authors || "Author";
     this.overview = bookData.volumeInfo.overview || "A book about a space drugs, giant space worms, an a boy that basically becomes god"; //jsonData.overview;
     this.image_url = bookData.volumeInfo.image || `https://i.imgur.com/J5LVHEL.jpg`; //`https://www.themoviedb.org/t/p/w600_and_h900_bestv2${jsonData.poster_path}` || 'sorry no image';
 }
