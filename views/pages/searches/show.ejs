@@ -4,28 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/reset.css">
     <link rel="stylesheet" href="/styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="/styles/module.css">
-    <link rel="stylesheet" href="/styles/reset.css">
+  
     <title>Books</title>
 </head>
 <body>
     <ul>
     <% for(let i = 0; i < bookArray.length; i++){ %>
-        
+ 
         <li>
 
           <h2><%= bookArray[i].title %></h2>
-          <ul>
-            <li><img src =  "<%= bookArray[i].image%> " > </li>
-              <li><p>Author: <%= bookArray[i].author %></p></li> 
-            <li><p>Description: <%= bookArray[i].overview %></p></li>
+            <img src =  "<%= bookArray[i].image%> " > 
+            <h2>Author: <%= bookArray[i].author %></h2>
+            <h2>Description:</h2>
+           <p> <%= bookArray[i].overview %></p>
             
-        </ul>
+      
           
           
         </li>
+ 
         <% } %>
     </ul>
 </body>
