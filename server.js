@@ -1,7 +1,6 @@
 'use strict';
 require('dotenv').config();
 require('ejs');
-const { Console } = require('console');
 const express = require('express');
 const superagent = require('superagent');
 const app = express();
@@ -25,29 +24,23 @@ app.get('/book/:id', getSingleBook);
 //  app.post('/books')
 // getData from DB
 
+function handleError(err, res) {
+    console.log("looks like something has gone wrong");
+    console.log(err);
+    res.render('pages/error.ejs', { err });
+}
 
-/*function updateBook(req,res){
-    /go get a book from DB, who's id = req.params.id
-    //pass book into ejs file as an object
-
-}*/
-/*function deleteBook(req,res){
-      //get id = req.params.id
-    //run delete query with that Id
-    // redirect them elsewhere
-}*/
 function addSingleBook(req, res) {
     //(author,title,isbn,image_url,description) 
     const sqlString = 'INSERT INTO book (author, title, isbn, image_url, description) VALUES($1, $2, $3, $4, $5) returning *';
     const sqlArray = [req.body.author, req.body.title, req.body.isbn, req.body.image_url, req.body.description];
     //console.log(sqlArray);
-
     client.query(sqlString, sqlArray).then(result => {
         const book = result.rows[0];
         console.log(book);
         // let ejObject = { book };
         res.redirect(`/book/${book.id}`);
-    });
+    }).catch(err => handleError(err, res));
     // console.log(req.body, "params");
 
 }
@@ -62,7 +55,7 @@ function getSingleBook(req, res) {
         let ejObject = { book };
         //console.log(result.row)
         res.render('pages/details.ejs', ejObject);
-    });
+    }).catch(err => handleError(err, res));
     //res.render('pages/single_tasks.ejs')
 }
 function renderHomePage(req, res) {
@@ -70,11 +63,9 @@ function renderHomePage(req, res) {
     // console.log(req.body);
     const sqlString = `SELECT * FROM book`;
     client.query(sqlString).then(result => {
-        //   console.log(result.rows);
         const ejsObject = { allBooks: result.rows };
-        //  console.log(ejsObject);
         res.render('pages/index.ejs', ejsObject);
-    });
+    }).catch(err => handleError(err, res));
     // res.render('pages/index.ejs', {});
 }
 //Map over the array of results, creating a new Book instance from each result object.
@@ -83,27 +74,22 @@ function postSearch(req, res) {
     console.log(req.body.search_radio);
     const url = `https://www.googleapis.com/books/v1/volumes?q=in${req.body.search_radio}:${req.body.search}`;
     superagent.get(url).then(bookDataReturned => {
-        // console.log(bookDataReturned.body.items, "INFO");
         const bookArray = bookDataReturned.body.items.map((item) => new Books(item));
         res.render(`pages/searches/show.ejs`, { bookArray: bookArray });
-        //res.redirect('/students');
-        //console.log(bookArray[0]);
-    });
+
+    }).catch(err => handleError(err, res));
 }
 
 function getNew(req, res) {
-    res.render('pages/searches/new.ejs', {});
+    res.render('pages/searches/new.ejs', {}).catch(err => handleError(err, res));
 }
 
 
-
-
-//bookData.volumenInfo {title, author}
 function Books(bookData) {
     console.log(bookData);
     const placeHolder = `https://i.imgur.com/J5LVHEL.jpg`;
     const fakeISBN = "N/A";
-    this.isbn = (bookData.volumeInfo.industryIdentifiers !== undefined) ? bookData.volumeInfo.industryIdentifiers[0].type + " " + bookData.volumeInfo.industryIdentifiers[0].identifier : fakeISBN;
+    this.isbn = bookData.volumeInfo.industryIdentifiers[0].type + " " + bookData.volumeInfo.industryIdentifiers[0].identifier;//(bookData.volumeInfo.industryIdentifiers !== undefined) ? bookData.volumeInfo.industryIdentifiers[0].type + " " + bookData.volumeInfo.industryIdentifiers[0].identifier : fakeISBN;
     const bookImg = (bookData.volumeInfo.imageLinks !== undefined) ? bookData.volumeInfo.imageLinks.thumbnail : placeHolder;
     this.title = bookData.volumeInfo.title;
 
