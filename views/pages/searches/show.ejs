@@ -16,18 +16,23 @@
     <% for(let i = 0; i < bookArray.length; i++){ %>
  
         <li>
-
-          <h2><%= bookArray[i].title %></h2>
+           <h2><%= bookArray[i].title %></h2>
             <img src =  "<%= bookArray[i].image%> " > 
             <h2>Author: <%= bookArray[i].author %></h2>
             <h2>Description:</h2>
            <p> <%= bookArray[i].overview %></p>
             
-      
-          
-          
         </li>
- 
+        <li>
+            <form action="/books" method="POST">
+                <button type= "submit"> ADD TO COLLECTION</button>
+                <input type = "hidden" value = "<%= bookArray[i].title %>" name = "title">
+                <input type = "hidden" value = "<%= bookArray[i].author %>" name = "author">
+                <input type = "hidden" value = "<%= bookArray[i].overview %>" name = "description">
+                <input type = "hidden" value = "<%= bookArray[i].image %>" name = "image_url">
+              </form>
+        </li>
+        
         <% } %>
     </ul>
 </body>

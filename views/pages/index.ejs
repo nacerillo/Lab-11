@@ -27,8 +27,14 @@
             <h2>Author: <%= allBooks[i].author %></h2>
             <h2>Description:</h2>
            <p> <%= allBooks[i].description %></p>
+           
+            <form action = "/book/<%=allBooks[i].id %>" method = "GET">
+                <button type= "submit"> VEIW DETAILS</button>
+                <input type = "hidden" value = "<%= allBooks[i].title %>" name = "title">
+                <input type = "hidden" value = "<%= allBooks[i].author %>" name = "author">
+                <input type = "hidden" value = "<%= allBooks[i].description %>" name = "description">
+            </form>
             
-      
           
           
         </li>
