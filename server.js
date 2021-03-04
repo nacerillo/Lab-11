@@ -56,9 +56,8 @@ function updateBook(req, res) {
     req.body.description,
   ];
   client.query(sqlString, sqlArray).then((result) => {
-    console.log(result.rows[0], "resulting data");
-
-    res.redirect(`/books/${result.rows[0].id}`);
+    //console.log(result.rows[0], "resulting data");
+    res.redirect(`/books/${req.params.id}`);
   });
 
   console.log(req.body, "update is triggering");
