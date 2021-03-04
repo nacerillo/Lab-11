@@ -37,3 +37,12 @@ Start time: 6:30 PM
 Finish time: 8:20 PM
 
 Actual time needed to complete: 1:50 hours
+
+## Lab 12 through 13 Cleanup: made sure to fix author search, added error handeling, update collection.
+
+Estimate of time needed to compelte: 2 hours
+Start time: 1:30 PM
+
+Finish time: 2:40 PM
+
+Actual time needed to complete: 1:10 hours

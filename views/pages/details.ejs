@@ -4,18 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="/styles/module.css">
     <title>Document</title>
 </head>
 <body>
     
     <section>
         <ul>
-            <li> Book Title: <%= book.title %></li>
-            <li> Auther: <%= book.author %></li>
-            <li> Description: <%= book.description %></li>
-            <li> ISBN: <%= book.isbn %></li>
+            <li>
+            
+                <h2><%= book.title %></h2>
+                  <img src =  "<%= book.image_url%> " > 
+                  <h2>Author: <%= book.author %></h2>
+                  <h2>Description:</h2>
+                 <p> <%= book.description %></p>
+                              
+                  <a href ="/books/<%=book.id %>/edit"> <button>Update</button></a>
 
-
+                  <form action = "/book/<%=book.id %>" method = "GET">
+                    <button type= "submit"> Delete</button>
+                    <input type = "hidden" value = "<%= book.title %>" name = "title">
+                    <input type = "hidden" value = "<%= book.author %>" name = "author">
+                    <input type = "hidden" value = "<%= book.description %>" name = "description">
+                    <input type = "hidden" value = "<%= book.description %>" name = "description">
+                </form>
+                  
+                
+                
+              </li>
         </ul>
 
     </section>
