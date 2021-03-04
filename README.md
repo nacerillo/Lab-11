@@ -37,3 +37,30 @@ Start time: 6:30 PM
 Finish time: 8:20 PM
 
 Actual time needed to complete: 1:50 hours
+
+## Lab 12 through 13 Cleanup: made sure to fix author search, added error handeling, update collection.
+
+Estimate of time needed to compelte: 2 hours
+Start time: 1:30 PM
+
+Finish time: 2:40 PM
+
+Actual time needed to complete: 1:10 hours
+
+## Lab 13- As a user, I want to update the details of a book so that it displays the way I want it to, according to my personalized preferences.
+
+Estimate of time needed to compelte: 2 hours
+Start time: 3:00 PM
+
+Finish time: 5:30 PM
+
+Actual time needed to complete: 2:30 hours
+
+## Lab 13 - As a user, I want to remove books from my collection so that it accurately represents my favorite books.
+
+Estimate of time needed to compelte: 1 hours
+Start time: 5:33 PM
+
+Finish time: 6:03 PM
+
+Actual time needed to complete: 30 minutes
