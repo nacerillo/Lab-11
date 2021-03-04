@@ -24,12 +24,21 @@ app.get("/searches/new", getNew);
 app.post("/searches", postSearch);
 app.post("/books", addSingleBook);
 app.get("/books/:id", getSingleBook);
-//app.get('/books/:id', deleteBook);
+app.delete("/books/:id", deleteBook);
 app.put("/books/:id", updateBook);
 app.get("/books/:id/edit", showEditableBook);
 
+function deleteBook(req, res) {
+  console.log(req.params.id, "book to be deleted");
+  const sqlString = "DELETE FROM book WHERE id=$1;";
+  const sqlArray = [req.params.id];
+  client
+    .query(sqlString, sqlArray)
+    .then(res.redirect("/"))
+    .catch((err) => handleError(err, res));
+}
 function showEditableBook(req, res) {
-  const sqlString = "SELECT * FROM book WHERE ID = $1";
+  const sqlString = "SELECT * FROM book WHERE ID = $1;";
   const sqlArray = [req.params.id];
   client
     .query(sqlString, sqlArray)
